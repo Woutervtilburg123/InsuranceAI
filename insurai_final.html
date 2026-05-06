@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>InsurAI — Trusted insurance advice</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0E2148;--navy-dark:#081530;--navy-mid:#162d5e;
+  --accent:#1A56C4;--accent-light:#EEF3FB;--accent-mid:#C5D5F5;
+  --white:#FFFFFF;--off:#F8F9FC;--text:#1C2438;--muted:#6B7A99;
+  --border:#DDE3EF;--border-strong:#B8C4DB;
+  --green:#1A7A3C;--green-bg:#EEF7F1;
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'Inter',system-ui,sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--white);color:var(--text);font-family:var(--sans);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 3rem;height:64px;background:rgba(255,255,255,0.97);border-bottom:1px solid var(--border);gap:1rem}
+.nav-logo{font-family:var(--serif);font-weight:700;font-size:1.2rem;color:var(--navy);flex-shrink:0}
+.nav-logo span{color:var(--accent)}
+.nav-links{display:flex;gap:1.2rem;list-style:none;flex-wrap:wrap}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:0.76rem;font-weight:500;transition:color 0.2s;white-space:nowrap}
+.nav-links a:hover{color:var(--navy)}
+.btn-nav{background:var(--navy);color:var(--white);font-family:var(--sans);font-weight:600;font-size:0.82rem;padding:0.52rem 1.2rem;border-radius:6px;border:none;cursor:pointer;transition:background 0.2s;flex-shrink:0}
+.btn-nav:hover{background:var(--accent)}
+
+.sec{padding:5rem 4rem}
+.sec.alt{background:var(--off);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.sec.dark{background:var(--navy)}
+.container{max-width:1060px;margin:0 auto}
+.ey{font-size:0.72rem;font-weight:600;color:var(--accent);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.7rem}
+.sec.dark .ey{color:rgba(255,255,255,0.4)}
+h2.st{font-family:var(--serif);font-size:clamp(1.6rem,2.8vw,2.2rem);font-weight:700;line-height:1.2;letter-spacing:-0.02em;color:var(--navy)}
+.sec.dark h2.st{color:white}
+.rule{width:36px;height:3px;background:var(--accent);margin:1.1rem 0;border-radius:2px}
+.sec.dark .rule{background:rgba(255,255,255,0.2)}
+.sb{font-size:0.9rem;color:var(--muted);line-height:1.75;max-width:520px;font-weight:300}
+.sec.dark .sb{color:rgba(255,255,255,0.45)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
+.two.center{align-items:center}
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+
+.btn-primary{background:var(--navy);color:var(--white);font-family:var(--sans);font-weight:600;font-size:0.875rem;padding:0.72rem 1.6rem;border-radius:6px;border:none;cursor:pointer;transition:background 0.2s}
+.btn-primary:hover{background:var(--accent)}
+.btn-outline{background:transparent;color:var(--navy);font-family:var(--sans);font-weight:600;font-size:0.875rem;padding:0.72rem 1.6rem;border-radius:6px;border:1.5px solid var(--border-strong);cursor:pointer;transition:all 0.2s;text-decoration:none;display:inline-block}
+.btn-outline:hover{border-color:var(--navy)}
+.btn-white{background:white;color:var(--navy);font-family:var(--sans);font-weight:700;font-size:0.875rem;padding:0.8rem 2.2rem;border-radius:6px;border:none;cursor:pointer;transition:all 0.2s}
+.btn-white:hover{background:var(--accent-light)}
+
+.card{background:var(--white);border:1px solid var(--border);border-radius:11px;padding:1.6rem;transition:all 0.25s}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 6px 24px rgba(14,33,72,0.07)}
+.card h3{font-family:var(--serif);font-size:0.98rem;font-weight:600;color:var(--navy);margin-bottom:0.45rem}
+.card p{font-size:0.82rem;color:var(--muted);line-height:1.65}
+.card-icon{font-size:1.1rem;margin-bottom:1rem}
+.dark-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:11px;padding:1.6rem;transition:all 0.25s}
+.dark-card:hover{background:rgba(255,255,255,0.08)}
+.dark-card h3{font-family:var(--serif);font-size:0.98rem;font-weight:600;color:white;margin-bottom:0.25rem}
+.dark-card .drole{font-size:0.75rem;color:rgba(255,255,255,0.35);margin-bottom:0.85rem}
+.dark-card p{font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.65}
+.dark-tag{display:inline-block;margin-top:0.9rem;background:rgba(26,86,196,0.25);color:#93B4F0;font-size:0.68rem;font-weight:600;padding:0.25rem 0.65rem;border-radius:4px}
+
+#hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:6rem 4rem 4rem;gap:4rem;position:relative;overflow:hidden}
+.hero-bg{position:absolute;right:-100px;top:-60px;width:580px;height:680px;background:var(--off);border-radius:40% 0 0 50%;z-index:0}
+.hero-content{position:relative;z-index:1}
+.eyebrow{display:inline-flex;align-items:center;font-size:0.73rem;font-weight:600;color:var(--accent);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:1.4rem;background:var(--accent-light);padding:0.3rem 0.85rem;border-radius:4px;border-left:3px solid var(--accent)}
+h1.hero-title{font-family:var(--serif);font-size:clamp(2.2rem,3.8vw,3.4rem);font-weight:700;line-height:1.15;letter-spacing:-0.02em;color:var(--navy);margin-bottom:1.2rem}
+h1.hero-title em{font-style:italic;color:var(--accent)}
+.hero-sub{font-size:1rem;color:var(--muted);line-height:1.75;font-weight:300;max-width:460px;margin-bottom:2.25rem}
+.hero-actions{display:flex;gap:0.875rem}
+.hero-visual{position:relative;z-index:1}
+.hero-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:1.6rem;box-shadow:0 4px 24px rgba(14,33,72,0.07)}
+.hc-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.4rem;padding-bottom:1rem;border-bottom:1px solid var(--border)}
+.hc-logo{font-family:var(--serif);font-weight:700;font-size:0.95rem;color:var(--navy)}
+.hc-logo span{color:var(--accent)}
+.hc-badge{background:var(--green-bg);color:var(--green);font-size:0.68rem;font-weight:600;padding:0.28rem 0.7rem;border-radius:100px}
+.hc-label{font-size:0.75rem;font-weight:600;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:0.3rem}
+.hc-value{font-family:var(--serif);font-size:0.98rem;font-weight:600;color:var(--navy);margin-bottom:1.1rem}
+.hc-step{display:flex;align-items:center;gap:0.7rem;padding:0.65rem 0.85rem;border-radius:7px;margin-bottom:0.4rem;background:var(--off)}
+.hc-step.active{background:var(--accent-light);border:1px solid var(--accent-mid)}
+.hsn{width:22px;height:22px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:700;color:var(--muted);flex-shrink:0}
+.hc-step.done .hsn{background:var(--accent);color:white}
+.hsl{font-size:0.8rem;font-weight:500;color:var(--muted)}
+.hc-step.done .hsl,.hc-step.active .hsl{color:var(--navy)}
+.hc-result{margin-top:1.1rem;background:var(--navy);border-radius:9px;padding:1.15rem}
+.rl{font-size:0.68rem;font-weight:600;color:rgba(255,255,255,0.45);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.35rem}
+.rv{font-family:var(--serif);font-size:1.2rem;font-weight:700;color:white;margin-bottom:0.15rem}
+.rs{font-size:0.73rem;color:rgba(255,255,255,0.45)}
+.hc-pill{display:inline-block;background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.65);font-size:0.68rem;padding:0.22rem 0.55rem;border-radius:4px;margin-top:0.65rem}
+
+.stats-bar{background:var(--navy);padding:1.4rem 4rem;display:flex}
+.si{flex:1;text-align:center;padding:0 1.5rem;border-right:1px solid rgba(255,255,255,0.1)}
+.si:last-child{border-right:none}
+.sn2{font-family:var(--serif);font-size:1.7rem;font-weight:700;color:white}
+.sl2{font-size:0.75rem;color:rgba(255,255,255,0.45);margin-top:0.15rem}
+
+.prob-list{display:flex;flex-direction:column}
+.pi{padding:1.3rem 0;border-bottom:1px solid var(--border);display:flex;gap:1.1rem;align-items:flex-start;transition:all 0.2s}
+.pi:first-child{border-top:1px solid var(--border)}
+.pi:hover .pi-ico{background:var(--navy);color:white}
+.pi-ico{width:38px;height:38px;border-radius:7px;background:var(--accent-light);display:flex;align-items:center;justify-content:center;font-size:0.95rem;flex-shrink:0;transition:all 0.2s}
+.pi h4{font-family:var(--serif);font-size:0.95rem;font-weight:600;color:var(--navy);margin-bottom:0.25rem}
+.pi p{font-size:0.82rem;color:var(--muted);line-height:1.6}
+
+.steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.8rem;margin-top:3rem}
+.step-card{background:var(--white);border:1px solid var(--border);border-radius:11px;padding:1.75rem;position:relative;transition:all 0.25s}
+.step-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.step-card::after{content:'→';position:absolute;top:50%;right:-1.3rem;transform:translateY(-50%);color:var(--border-strong);font-size:1rem}
+.step-card:last-child::after{display:none}
+.sc-num{font-family:var(--serif);font-size:2.2rem;font-weight:700;color:var(--accent-mid);line-height:1;margin-bottom:1.1rem}
+.step-card h3{font-family:var(--serif);font-size:0.98rem;font-weight:600;color:var(--navy);margin-bottom:0.5rem}
+.step-card p{font-size:0.82rem;color:var(--muted);line-height:1.65}
+
+.ai-demo-wrap{background:var(--navy-mid);border-radius:13px;padding:1.5rem}
+.demo-bar{display:flex;align-items:center;gap:0.5rem;margin-bottom:1.25rem;padding-bottom:1rem;border-bottom:1px solid rgba(255,255,255,0.08)}
+.demo-dot{width:8px;height:8px;border-radius:50%}
+.bubble{border-radius:12px;padding:0.7rem 0.95rem;font-size:0.82rem;margin-bottom:0.65rem;line-height:1.6;max-width:88%}
+.bu{background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.75);margin-left:auto}
+.ba{background:rgba(26,86,196,0.2);border:1px solid rgba(26,86,196,0.35);color:rgba(255,255,255,0.85)}
+.ba-tag{font-size:0.67rem;color:#93B4F0;font-weight:600;margin-bottom:0.3rem}
+.ai-hl{color:#93B4F0;font-weight:600}
+
+.dt-stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin:2.5rem 0}
+.dt-stat{background:var(--white);border:1px solid var(--border);border-radius:11px;padding:1.5rem;text-align:center}
+.dt-stat-num{font-family:var(--serif);font-size:2rem;font-weight:700;color:var(--accent);margin-bottom:0.3rem}
+.dt-stat-label{font-size:0.8rem;color:var(--muted);line-height:1.5}
+.dt-pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:1.5rem}
+.dt-pillar{padding:1.3rem;border:1px solid var(--border);border-radius:10px;background:var(--white)}
+.dt-pillar-icon{font-size:1.1rem;margin-bottom:0.65rem}
+.dt-pillar h4{font-family:var(--serif);font-size:0.9rem;font-weight:600;color:var(--navy);margin-bottom:0.35rem}
+.dt-pillar p{font-size:0.78rem;color:var(--muted);line-height:1.6}
+
+.comp-table-wrap{margin-top:2.5rem;border:1px solid var(--border);border-radius:11px;overflow:auto}
+.comp-table{width:100%;border-collapse:collapse;font-size:0.82rem;min-width:600px}
+.comp-table th{text-align:center;font-size:0.7rem;font-weight:600;color:var(--muted);letter-spacing:0.07em;text-transform:uppercase;padding:0.75rem 1rem;background:var(--off);border-bottom:1px solid var(--border)}
+.comp-table th:first-child{text-align:left}
+.comp-table th.us{background:var(--navy);color:white}
+.comp-table td{padding:0.8rem 1rem;border-bottom:1px solid var(--border);text-align:center;color:var(--muted);font-size:0.82rem}
+.comp-table td:first-child{text-align:left;font-weight:500;color:var(--text)}
+.comp-table tr:last-child td{border-bottom:none}
+.comp-table td.us{background:rgba(26,86,196,0.04);font-weight:600;color:var(--navy)}
+.comp-yes{color:var(--green);font-weight:600}
+.comp-no{color:#C0392B}
+.comp-part{color:#E67E22;font-weight:500}
+
+.bm-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.4rem;margin-top:2.5rem}
+.bm-card{border:1px solid var(--border);border-radius:11px;padding:1.6rem;background:var(--white)}
+.bm-card h3{font-family:var(--serif);font-size:0.98rem;font-weight:600;color:var(--navy);margin-bottom:0.75rem;padding-bottom:0.6rem;border-bottom:1px solid var(--border)}
+.bm-item{display:flex;align-items:flex-start;gap:0.6rem;margin-bottom:0.55rem;font-size:0.82rem;color:var(--muted);line-height:1.55}
+.bm-item::before{content:'→';color:var(--accent);font-weight:700;flex-shrink:0;margin-top:1px}
+
+.mv-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;margin-top:2.5rem}
+.mv-card{background:var(--white);border:1px solid var(--border);border-radius:11px;padding:1.75rem}
+.mv-card h3{font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--navy);margin-bottom:0.6rem}
+.mv-card p{font-size:0.88rem;color:var(--muted);line-height:1.75}
+.mv-icon{font-size:1.3rem;margin-bottom:0.9rem}
+
+.onboarding-flow{display:flex;flex-direction:column;gap:0;margin-top:2.5rem}
+.ob-step{display:flex;gap:1.75rem;align-items:flex-start;position:relative;padding-bottom:2rem}
+.ob-step:last-child{padding-bottom:0}
+.ob-step::before{content:'';position:absolute;left:19px;top:40px;bottom:0;width:1px;background:var(--border)}
+.ob-step:last-child::before{display:none}
+.ob-num{width:40px;height:40px;border-radius:50%;background:var(--navy);color:white;font-family:var(--serif);font-size:1rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative;z-index:1}
+.ob-content{flex:1;padding-top:0.5rem}
+.ob-content h3{font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--navy);margin-bottom:0.4rem}
+.ob-content p{font-size:0.85rem;color:var(--muted);line-height:1.65;margin-bottom:0.75rem}
+.field-list{display:flex;flex-wrap:wrap;gap:0.5rem}
+.field-tag{background:var(--accent-light);color:var(--accent);font-size:0.75rem;font-weight:600;padding:0.3rem 0.75rem;border-radius:100px;border:1px solid var(--accent-mid)}
+.field-tag.optional{background:var(--off);color:var(--muted);border-color:var(--border)}
+
+.payment-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;margin-top:2.5rem}
+.pay-card{background:var(--white);border:1px solid var(--border);border-radius:11px;padding:1.6rem}
+.pay-card h3{font-family:var(--serif);font-size:0.98rem;font-weight:600;color:var(--navy);margin-bottom:0.5rem}
+.pay-card p{font-size:0.82rem;color:var(--muted);line-height:1.65;margin-bottom:1rem}
+.pay-methods{display:flex;flex-wrap:wrap;gap:0.5rem}
+.pay-badge{background:var(--off);border:1px solid var(--border);border-radius:6px;padding:0.35rem 0.8rem;font-size:0.78rem;font-weight:600;color:var(--text)}
+.pay-note{margin-top:1rem;background:var(--green-bg);border:1px solid #9FE1CB;border-radius:8px;padding:0.85rem 1rem;font-size:0.8rem;color:#1a4a30;line-height:1.6}
+.stripe-box{background:var(--navy);border-radius:11px;padding:1.6rem;color:white}
+.stripe-box h3{font-family:var(--serif);font-size:0.98rem;font-weight:600;color:white;margin-bottom:0.5rem}
+.stripe-box p{font-size:0.82rem;color:rgba(255,255,255,0.55);line-height:1.65;margin-bottom:1rem}
+.stripe-feature{display:flex;align-items:flex-start;gap:0.55rem;font-size:0.82rem;color:rgba(255,255,255,0.7);margin-bottom:0.45rem;line-height:1.5}
+.stripe-feature::before{content:'✓';color:#4BFFC0;font-weight:700;flex-shrink:0}
+
+.data-table-wrap{margin-top:2.5rem;border:1px solid var(--border);border-radius:11px;overflow:auto}
+.data-table{width:100%;border-collapse:collapse;font-size:0.82rem;min-width:560px}
+.data-table th{text-align:left;font-size:0.7rem;font-weight:600;color:var(--muted);letter-spacing:0.07em;text-transform:uppercase;padding:0.75rem 1.1rem;background:var(--off);border-bottom:1px solid var(--border)}
+.data-table td{padding:0.85rem 1.1rem;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.55}
+.data-table tr:last-child td{border-bottom:none}
+.data-table tr:hover td{background:#FAFBFE}
+.dt-cat{font-weight:600;color:var(--navy)}
+.dt-req{display:inline-block;font-size:0.68rem;font-weight:700;padding:0.2rem 0.55rem;border-radius:100px}
+.req{background:#FAECE7;color:#9B3B18}
+.opt{background:var(--off);color:var(--muted);border:1px solid var(--border)}
+
+.sec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-top:2.5rem}
+.sec-card{border:1px solid var(--border);border-radius:11px;padding:1.6rem;background:var(--white);transition:all 0.25s}
+.sec-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.sec-card .sico{font-size:1.2rem;margin-bottom:1rem;display:block}
+.sec-card h3{font-family:var(--serif);font-size:0.95rem;font-weight:600;color:var(--navy);margin-bottom:0.45rem}
+.sec-card p{font-size:0.82rem;color:var(--muted);line-height:1.65}
+.storage-flow{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:2.5rem;border:1px solid var(--border);border-radius:11px;overflow:hidden}
+.sf-step{padding:1.4rem;border-right:1px solid var(--border);background:var(--white)}
+.sf-step:last-child{border-right:none}
+.sf-num{font-family:var(--serif);font-size:1.5rem;font-weight:700;color:var(--accent-mid);margin-bottom:0.6rem}
+.sf-title{font-size:0.82rem;font-weight:600;color:var(--navy);margin-bottom:0.35rem}
+.sf-body{font-size:0.78rem;color:var(--muted);line-height:1.6}
+.retention-note{margin-top:1.4rem;padding:1rem 1.25rem;background:var(--accent-light);border-radius:8px;border-left:3px solid var(--accent);font-size:0.82rem;color:var(--text);line-height:1.65}
+
+.pricing-wrap{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;max-width:660px;margin-top:2.5rem}
+.pc{border-radius:11px;padding:1.85rem;border:1px solid var(--border);background:var(--white)}
+.pc.feat{background:var(--navy);border-color:var(--navy)}
+.pc-tier{font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:1.1rem}
+.pc.feat .pc-tier{color:rgba(255,255,255,0.4)}
+.pc-price{font-family:var(--serif);font-size:2.4rem;font-weight:700;color:var(--navy);line-height:1;margin-bottom:0.2rem}
+.pc.feat .pc-price{color:white}
+.pc-per{font-size:0.8rem;color:var(--muted);margin-bottom:1.3rem}
+.pc.feat .pc-per{color:rgba(255,255,255,0.35)}
+.pc-div{height:1px;background:var(--border);margin:1.1rem 0}
+.pc.feat .pc-div{background:rgba(255,255,255,0.1)}
+.pc-feats{list-style:none;display:flex;flex-direction:column;gap:0.65rem}
+.pc-feats li{font-size:0.82rem;display:flex;align-items:center;gap:0.55rem;color:var(--text)}
+.pc.feat .pc-feats li{color:rgba(255,255,255,0.75)}
+.pc-feats li.off{color:var(--muted)}
+.pc.feat .pc-feats li.off{color:rgba(255,255,255,0.25)}
+.chk{width:15px;height:15px;border-radius:50%;background:var(--accent-light);display:flex;align-items:center;justify-content:center;font-size:0.58rem;color:var(--accent);flex-shrink:0}
+.pc.feat .chk{background:rgba(255,255,255,0.12);color:rgba(255,255,255,0.7)}
+.chk.off{background:var(--off);color:var(--border-strong)}
+.pc-cta{width:100%;margin-top:1.6rem;padding:0.72rem;border-radius:6px;font-family:var(--sans);font-weight:600;font-size:0.84rem;cursor:pointer;transition:all 0.2s;border:1.5px solid var(--border-strong);background:transparent;color:var(--navy)}
+.pc-cta:hover{background:var(--navy);color:white;border-color:var(--navy)}
+.pc.feat .pc-cta{background:white;color:var(--navy);border-color:white}
+.pc.feat .pc-cta:hover{background:var(--accent-light)}
+.pc-badge{display:inline-block;background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);font-size:0.67rem;font-weight:600;padding:0.22rem 0.6rem;border-radius:4px;margin-bottom:0.7rem;letter-spacing:0.06em;text-transform:uppercase}
+
+.fin-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;margin-bottom:2.5rem}
+.fin-card{background:var(--white);border:1px solid var(--border);border-radius:11px;padding:1.3rem}
+.fc-label{font-size:0.73rem;color:var(--muted);margin-bottom:0.3rem;font-weight:500}
+.fc-val{font-family:var(--serif);font-size:1.5rem;font-weight:700;color:var(--navy)}
+.fc-sub{font-size:0.72rem;color:var(--muted);margin-top:0.2rem}
+.fin-table{width:100%;border-collapse:collapse;font-size:0.82rem}
+.fin-table th{text-align:left;font-size:0.7rem;font-weight:600;color:var(--muted);letter-spacing:0.07em;text-transform:uppercase;padding:0.6rem 0.85rem;border-bottom:1px solid var(--border);background:var(--off)}
+.fin-table td{padding:0.7rem 0.85rem;border-bottom:1px solid var(--border);color:var(--text)}
+.fin-table .total td{color:var(--navy);font-weight:600;background:var(--off)}
+.fin-note{font-size:0.78rem;color:var(--muted);margin-top:1.1rem;line-height:1.65;padding:1rem;background:var(--accent-light);border-radius:8px;border-left:3px solid var(--accent)}
+
+.risk-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;margin-top:2.5rem}
+.risk-card{border-radius:11px;padding:1.5rem;border:1px solid var(--border)}
+.risk-card.warn{border-color:#F5C4B3;background:#FAECE7}
+.risk-card.ok{border-color:#9FE1CB;background:#E1F5EE}
+.risk-tag{font-size:0.68rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.65rem;padding:0.22rem 0.6rem;border-radius:4px;display:inline-block}
+.risk-card.warn .risk-tag{background:#F0997B;color:#4A1B0C}
+.risk-card.ok .risk-tag{background:#5DCAA5;color:#04342C}
+.risk-card h4{font-family:var(--serif);font-size:0.95rem;font-weight:600;color:var(--text);margin-bottom:0.4rem}
+.risk-card p{font-size:0.82rem;color:#444;line-height:1.6}
+
+.trust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-top:2.5rem}
+.tcard{border:1px solid var(--border);border-radius:11px;padding:1.6rem}
+.tcard .ti{font-size:1.1rem;margin-bottom:1rem;display:block}
+.tcard h3{font-family:var(--serif);font-size:0.95rem;font-weight:600;color:var(--navy);margin-bottom:0.45rem}
+.tcard p{font-size:0.82rem;color:var(--muted);line-height:1.65}
+
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-top:2.5rem}
+.tm{background:var(--white);border:1px solid var(--border);border-radius:11px;padding:1.5rem;text-align:center;transition:all 0.25s}
+.tm:hover{border-color:var(--accent);transform:translateY(-2px)}
+.tm-avatar{width:52px;height:52px;border-radius:50%;background:var(--accent-light);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:0.9rem;font-weight:700;color:var(--accent);margin:0 auto 0.85rem}
+.tm h4{font-family:var(--serif);font-size:0.95rem;font-weight:600;color:var(--navy);margin-bottom:0.2rem}
+.tm .tm-role{font-size:0.75rem;color:var(--accent);font-weight:500;margin-bottom:0.6rem}
+.tm p{font-size:0.8rem;color:var(--muted);line-height:1.6}
+
+.faq-list{display:flex;flex-direction:column;gap:0;margin-top:2.5rem;border:1px solid var(--border);border-radius:11px;overflow:hidden}
+.faq-item{border-bottom:1px solid var(--border)}
+.faq-item:last-child{border-bottom:none}
+.faq-q{width:100%;text-align:left;padding:1.15rem 1.4rem;background:none;border:none;font-family:var(--sans);font-size:0.88rem;font-weight:600;color:var(--navy);cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:background 0.2s;gap:1rem}
+.faq-q:hover{background:var(--off)}
+.faq-arrow{font-size:0.9rem;color:var(--muted);transition:transform 0.25s;flex-shrink:0}
+.faq-item.open .faq-arrow{transform:rotate(180deg)}
+.faq-a{display:none;padding:0 1.4rem 1.15rem;font-size:0.85rem;color:var(--muted);line-height:1.7}
+.faq-item.open .faq-a{display:block}
+
+.investor-box{background:var(--navy);border-radius:14px;padding:2.5rem;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;margin-top:2.5rem}
+.investor-box h3{font-family:var(--serif);font-size:1.3rem;font-weight:700;color:white;margin-bottom:0.75rem;line-height:1.3}
+.investor-box p{font-size:0.88rem;color:rgba(255,255,255,0.55);line-height:1.7}
+.investor-details{display:flex;flex-direction:column;gap:1rem}
+.investor-detail{display:flex;align-items:flex-start;gap:0.85rem}
+.id-icon{width:36px;height:36px;background:rgba(255,255,255,0.08);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0}
+.id-label{font-size:0.72rem;color:rgba(255,255,255,0.4);margin-bottom:0.15rem;font-weight:500}
+.id-value{font-size:0.88rem;color:rgba(255,255,255,0.85);font-weight:500}
+
+#cta-sec{background:var(--navy-dark);padding:5.5rem 4rem;text-align:center}
+.cta-ey{font-size:0.72rem;font-weight:600;color:rgba(255,255,255,0.35);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.9rem}
+h2.cta-t{font-family:var(--serif);font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:700;color:white;letter-spacing:-0.02em;line-height:1.2;margin-bottom:1.1rem}
+.cta-sub{font-size:0.95rem;color:rgba(255,255,255,0.4);max-width:440px;margin:0 auto 2.25rem;line-height:1.7}
+
+footer{background:var(--navy);padding:2rem 4rem;border-top:1px solid rgba(255,255,255,0.07)}
+.footer-inner{display:flex;align-items:flex-start;justify-content:space-between;gap:2rem;flex-wrap:wrap}
+.fl{font-family:var(--serif);font-weight:700;font-size:1.05rem;color:white;margin-bottom:0.4rem}
+.fl span{color:#93B4F0}
+.footer-desc{font-size:0.75rem;color:rgba(255,255,255,0.3);max-width:200px;line-height:1.5}
+.flink-group{display:flex;flex-direction:column;gap:0.5rem}
+.flink-group-title{font-size:0.7rem;font-weight:600;color:rgba(255,255,255,0.3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.25rem}
+.flinks{display:flex;flex-direction:column;gap:0.4rem}
+.flinks a{font-size:0.78rem;color:rgba(255,255,255,0.35);text-decoration:none;transition:color 0.2s}
+.flinks a:hover{color:rgba(255,255,255,0.7)}
+.footer-bottom{margin-top:2rem;padding-top:1.25rem;border-top:1px solid rgba(255,255,255,0.07);font-size:0.72rem;color:rgba(255,255,255,0.18)}
+
+.reveal{opacity:0;transform:translateY(18px);transition:opacity 0.55s ease,transform 0.55s ease}
+.reveal.visible{opacity:1;transform:none}
+
+.mwrap{position:fixed;inset:0;background:rgba(14,33,72,0.55);z-index:999;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.25s;padding:1rem}
+.mwrap.open{opacity:1;pointer-events:all}
+.modal{background:white;border-radius:14px;padding:2.25rem;max-width:480px;width:100%;position:relative;transform:translateY(14px);transition:transform 0.25s;max-height:90vh;overflow-y:auto}
+.mwrap.open .modal{transform:none}
+.modal h2{font-family:var(--serif);font-size:1.4rem;font-weight:700;color:var(--navy);margin-bottom:0.25rem}
+.modal-sub{font-size:0.85rem;color:var(--muted);margin-bottom:1.4rem;line-height:1.6}
+.mcl{position:absolute;top:1.1rem;right:1.3rem;background:none;border:none;color:var(--muted);font-size:1.1rem;cursor:pointer}
+.modal-step-indicator{display:flex;gap:0.4rem;margin-bottom:1.4rem}
+.msi{height:3px;flex:1;border-radius:2px;background:var(--border);transition:background 0.3s}
+.msi.active{background:var(--accent)}
+.modal-step{display:none}
+.modal-step.active{display:block}
+.ms-title{font-family:var(--serif);font-size:0.88rem;font-weight:600;color:var(--navy);margin-bottom:0.9rem;padding-bottom:0.7rem;border-bottom:1px solid var(--border)}
+.fg{margin-bottom:0.85rem}
+.fg label{display:block;font-size:0.76rem;font-weight:600;color:var(--text);margin-bottom:0.35rem}
+.fg input,.fg select{width:100%;padding:0.65rem 0.85rem;border:1px solid var(--border);border-radius:6px;font-family:var(--sans);font-size:0.85rem;color:var(--text);outline:none;transition:border 0.2s;background:white}
+.fg input:focus,.fg select:focus{border-color:var(--accent)}
+.fg .hint{font-size:0.72rem;color:var(--muted);margin-top:0.25rem}
+.modal-row{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem}
+.modal-actions{display:flex;gap:0.75rem;margin-top:1.1rem}
+.mbtn{flex:1;background:var(--navy);color:white;font-family:var(--sans);font-weight:600;font-size:0.875rem;padding:0.72rem;border-radius:6px;border:none;cursor:pointer;transition:background 0.2s}
+.mbtn:hover{background:var(--accent)}
+.mbtn.back{background:transparent;color:var(--navy);border:1.5px solid var(--border-strong);flex:0 0 auto;padding:0.72rem 1.1rem}
+.mbtn.back:hover{border-color:var(--navy)}
+.privacy-note{font-size:0.72rem;color:var(--muted);text-align:center;margin-top:0.75rem;line-height:1.5}
+.checkbox-row{display:flex;align-items:flex-start;gap:0.6rem;margin-top:0.5rem}
+.checkbox-row input[type=checkbox]{margin-top:3px;flex-shrink:0;accent-color:var(--accent)}
+.checkbox-row label{font-size:0.78rem;color:var(--muted);line-height:1.5;cursor:pointer}
+
+@media(max-width:900px){
+  nav{padding:0 1.25rem}
+  .nav-links{display:none}
+  #hero{grid-template-columns:1fr;padding:5rem 1.5rem 3rem;min-height:auto}
+  .hero-bg{display:none}
+  .hero-visual{display:none}
+  .sec{padding:3.5rem 1.5rem}
+  .stats-bar{padding:1rem 1.5rem;flex-wrap:wrap}
+  .si{flex:1 0 50%;border-right:none;border-bottom:1px solid rgba(255,255,255,0.1);padding:0.75rem 0.5rem}
+  .si:nth-child(odd){border-right:1px solid rgba(255,255,255,0.1)}
+  .si:nth-last-child(-n+2){border-bottom:none}
+  .two,.two.center{grid-template-columns:1fr;gap:2.5rem}
+  .three{grid-template-columns:1fr 1fr;gap:1rem}
+  .steps-grid{grid-template-columns:1fr;gap:1rem}
+  .step-card::after{display:none}
+  .mv-grid,.payment-grid,.bm-grid,.mv-grid{grid-template-columns:1fr}
+  .pricing-wrap{grid-template-columns:1fr;max-width:100%}
+  .fin-grid{grid-template-columns:1fr 1fr}
+  .risk-grid{grid-template-columns:1fr}
+  .trust-grid,.sec-grid{grid-template-columns:1fr 1fr}
+  .team-grid{grid-template-columns:1fr 1fr}
+  .storage-flow{grid-template-columns:1fr 1fr}
+  .sf-step{border-right:none;border-bottom:1px solid var(--border)}
+  .sf-step:nth-child(odd){border-right:1px solid var(--border)}
+  .sf-step:last-child,.sf-step:nth-last-child(1){border-bottom:none}
+  .investor-box{grid-template-columns:1fr;gap:2rem}
+  .dt-stat-grid,.dt-pillars{grid-template-columns:1fr}
+  footer{padding:1.5rem}
+  .footer-inner{flex-direction:column;gap:1.5rem}
+  .modal{padding:1.5rem}
+  .modal-row{grid-template-columns:1fr}
+}
+@media(max-width:500px){
+  .three,.trust-grid,.team-grid,.sec-grid{grid-template-columns:1fr}
+  .fin-grid{grid-template-columns:1fr}
+  .storage-flow{grid-template-columns:1fr}
+  .sf-step{border-right:none}
+  .hero-actions{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Insur<span>AI</span></div>
+  <ul class="nav-links">
+    <li><a href="#mission">Mission</a></li>
+    <li><a href="#transformation">Opportunity</a></li>
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#competition">Competition</a></li>
+    <li><a href="#businessmodel">Business model</a></li>
+    <li><a href="#account">Account</a></li>
+    <li><a href="#payment">Payment</a></li>
+    <li><a href="#security">Security</a></li>
+    <li><a href="#financials">Financials</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#contact">Investors</a></li>
+  </ul>
+  <button class="btn-nav" onclick="openModal()">Get started</button>
+</nav>
+
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="eyebrow">AI-powered insurance advice</div>
+    <h1 class="hero-title">Find the right insurance<br><em>in seconds.</em></h1>
+    <p class="hero-sub">Personalised insurance advice for students and young professionals — clear, fast, and tailored to your situation. No jargon, no pressure.</p>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="openModal()">Get started — it's free</button>
+      <a class="btn-outline" href="#how">How it works</a>
+    </div>
+  </div>
+  <div class="hero-visual reveal">
+    <div class="hero-card">
+      <div class="hc-header"><div class="hc-logo">Insur<span>AI</span> Advisor</div><span class="hc-badge">Analysing profile</span></div>
+      <div class="hc-label">Your profile</div>
+      <div class="hc-value">Student · Amsterdam · Age 22</div>
+      <div class="hc-step done"><div class="hsn">✓</div><span class="hsl">Profile completed</span></div>
+      <div class="hc-step done"><div class="hsn">✓</div><span class="hsl">Needs assessed</span></div>
+      <div class="hc-step active"><div class="hsn">3</div><span class="hsl">Matching policies…</span></div>
+      <div class="hc-result">
+        <div class="rl">Best match found</div>
+        <div class="rv">Liability + Contents</div>
+        <div class="rs">Coverage from €8.40/month</div>
+        <span class="hc-pill">3 providers compared</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="stats-bar">
+  <div class="si"><div class="sn2">3 min</div><div class="sl2">Average advice time</div></div>
+  <div class="si"><div class="sn2">€3/mo</div><div class="sl2">Premium plan</div></div>
+  <div class="si"><div class="sn2">100%</div><div class="sl2">Personalised advice</div></div>
+  <div class="si"><div class="sn2">GDPR</div><div class="sl2">Fully compliant</div></div>
+</div>
+
+<div id="mission" class="sec alt">
+  <div class="container">
+    <p class="ey">Mission &amp; Vision</p>
+    <h2 class="st">Why InsurAI exists.</h2>
+    <div class="rule"></div>
+    <div class="mv-grid reveal">
+      <div class="mv-card"><div class="mv-icon">🎯</div><h3>Our mission</h3><p>To make insurance accessible and understandable for every young person in Europe — by removing complexity through technology and delivering honest, personalised advice at zero barrier to entry.</p></div>
+      <div class="mv-card"><div class="mv-icon">🔭</div><h3>Our vision</h3><p>A future where no young person is underinsured due to a lack of information. We envision InsurAI as the go-to financial guidance platform for the next generation — starting with insurance, expanding into broader personal finance.</p></div>
+    </div>
+  </div>
+</div>
+
+<div id="problem" class="sec">
+  <div class="container">
+    <div class="two center">
+      <div>
+        <p class="ey">The problem</p>
+        <h2 class="st">Insurance is confusing — especially when you're starting out.</h2>
+        <div class="rule"></div>
+        <p class="sb">Most young people in the Netherlands avoid or delay getting insurance because the process is complex, jargon-heavy, and impossible to compare properly.</p>
+      </div>
+      <div class="prob-list reveal">
+        <div class="pi"><div class="pi-ico">📄</div><div><h4>Complex policy language</h4><p>Fine print and legal terminology make it nearly impossible to understand actual coverage before something goes wrong.</p></div></div>
+        <div class="pi"><div class="pi-ico">🔍</div><div><h4>No easy comparison</h4><p>Dozens of providers with inconsistent formats make comparison feel like a full-time task, discouraging engagement entirely.</p></div></div>
+        <div class="pi"><div class="pi-ico">💸</div><div><h4>Costly misjudgements</h4><p>Wrong coverage or overpaying costs Dutch students hundreds of euros annually — a direct result of poor information access.</p></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="transformation" class="sec alt">
+  <div class="container">
+    <p class="ey">Digital transformation opportunity</p>
+    <h2 class="st">Why now, and why digital?</h2>
+    <div class="rule"></div>
+    <p class="sb">The Dutch insurance market is large, entrenched, and structurally offline — creating a clear opening for a technology-first challenger targeting an underserved segment.</p>
+    <div class="dt-stat-grid reveal">
+      <div class="dt-stat"><div class="dt-stat-num">€90B+</div><div class="dt-stat-label">Dutch insurance market annual gross premium volume (DNB, 2023)</div></div>
+      <div class="dt-stat"><div class="dt-stat-num">~3M</div><div class="dt-stat-label">18–25 year olds in the Netherlands — majority with suboptimal or no coverage</div></div>
+      <div class="dt-stat"><div class="dt-stat-num">78%</div><div class="dt-stat-label">of Dutch consumers say they find insurance "difficult to understand" (Nibud, 2022)</div></div>
+    </div>
+    <p style="font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--navy);margin-bottom:1rem">Three pillars of digital transformation</p>
+    <div class="dt-pillars reveal">
+      <div class="dt-pillar"><div class="dt-pillar-icon">🤖</div><h4>AI replaces the broker</h4><p>Traditional insurance advice requires a licensed broker and weeks of waiting. AI delivers the same analysis in under three minutes, at scale and at near-zero marginal cost.</p></div>
+      <div class="dt-pillar"><div class="dt-pillar-icon">📱</div><h4>Digital-first distribution</h4><p>The entire customer journey happens online. No paper, no offices, no physical infrastructure — making InsurAI inherently scalable across borders from day one.</p></div>
+      <div class="dt-pillar"><div class="dt-pillar-icon">📊</div><h4>Data-driven personalisation</h4><p>Traditional insurers use broad demographic segmentation. InsurAI uses real-time profile data to match individuals to the most relevant policies, improving outcomes simultaneously.</p></div>
+    </div>
+  </div>
+</div>
+
+<div id="how" class="sec">
+  <div class="container">
+    <p class="ey">How it works</p>
+    <h2 class="st">Three steps to the right coverage.</h2>
+    <div class="rule"></div>
+    <div class="steps-grid reveal">
+      <div class="step-card"><div class="sc-num">01</div><h3>Answer a few questions</h3><p>Tell us about your situation — age, living arrangement, income, and what you want to protect. Takes under two minutes.</p></div>
+      <div class="step-card"><div class="sc-num">02</div><h3>AI analyses your needs</h3><p>Our model evaluates your profile against hundreds of real policies, identifying the most relevant options for your life and budget.</p></div>
+      <div class="step-card"><div class="sc-num">03</div><h3>Receive your advice</h3><p>A clear, plain-language recommendation — no jargon, no pressure. You make the final decision, fully informed.</p></div>
+    </div>
+  </div>
+</div>
+
+<div id="ai" class="sec dark">
+  <div class="container">
+    <div class="two center">
+      <div>
+        <p class="ey">AI in action</p>
+        <h2 class="st" style="color:white">Powered by intelligent technology.</h2>
+        <div class="rule"></div>
+        <p class="sb">Our platform uses AI to analyse your situation and match it to real, current insurance options. Generative AI translates dense policy terms into plain language.</p>
+        <div style="margin-top:2rem;display:flex;flex-direction:column;gap:1.1rem">
+          <div style="display:flex;gap:0.9rem;align-items:flex-start"><div style="width:34px;height:34px;background:rgba(255,255,255,0.08);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:0.85rem;flex-shrink:0">🔎</div><div><div style="font-family:var(--serif);font-size:0.9rem;font-weight:600;color:white;margin-bottom:0.2rem">Contextual matching</div><div style="font-size:0.8rem;color:rgba(255,255,255,0.45);line-height:1.6">Maps your profile to real policies across hundreds of variables most comparison sites overlook.</div></div></div>
+          <div style="display:flex;gap:0.9rem;align-items:flex-start"><div style="width:34px;height:34px;background:rgba(255,255,255,0.08);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:0.85rem;flex-shrink:0">📝</div><div><div style="font-family:var(--serif);font-size:0.9rem;font-weight:600;color:white;margin-bottom:0.2rem">Language simplification</div><div style="font-size:0.8rem;color:rgba(255,255,255,0.45);line-height:1.6">Generative AI rewrites dense policy text into explanations you can actually act on.</div></div></div>
+          <div style="display:flex;gap:0.9rem;align-items:flex-start"><div style="width:34px;height:34px;background:rgba(255,255,255,0.08);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:0.85rem;flex-shrink:0">📈</div><div><div style="font-family:var(--serif);font-size:0.9rem;font-weight:600;color:white;margin-bottom:0.2rem">Continuous improvement</div><div style="font-size:0.8rem;color:rgba(255,255,255,0.45);line-height:1.6">Recommendations improve over time as the model learns from aggregated, anonymised usage data.</div></div></div>
+        </div>
+      </div>
+      <div class="ai-demo-wrap reveal">
+        <div class="demo-bar"><div class="demo-dot" style="background:#ff5f57"></div><div class="demo-dot" style="background:#febc2e"></div><div class="demo-dot" style="background:#28c840"></div><span style="font-size:0.75rem;color:rgba(255,255,255,0.35);margin-left:0.5rem">InsurAI Advisor — demo</span></div>
+        <div class="bubble bu">I'm 22, student in Amsterdam, just moved into my own place. What do I actually need?</div>
+        <div class="bubble ba"><div class="ba-tag">InsurAI</div>Based on your profile, two essentials:<br><br><span class="ai-hl">1. Aansprakelijkheidsverzekering (AVP)</span> — ~€3/mo. Covers accidental damage to others.<br><br><span class="ai-hl">2. Inboedelverzekering</span> — ~€6/mo. Covers your belongings against theft, fire, and water damage.</div>
+        <div class="bubble bu">That's under €10 combined?</div>
+        <div class="bubble ba"><div class="ba-tag">InsurAI</div>Correct — and I found 3 providers within your budget. Want to see the comparison?</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="sec dark" style="padding-top:0;border-top:1px solid rgba(255,255,255,0.06)">
+  <div class="container">
+    <p class="ey">Who it's for</p>
+    <h2 class="st" style="color:white">Designed for your generation.</h2>
+    <div class="rule"></div>
+    <p class="sb">InsurAI targets 18–25 year olds navigating insurance for the first time — students, young professionals, and freelancers across the Netherlands, a segment currently underserved by traditional insurers.</p>
+    <div class="three reveal" style="margin-top:2.5rem">
+      <div class="dark-card"><div style="font-size:1.1rem;margin-bottom:1rem">🎓</div><h3>Lisa, 21</h3><div class="drole">Student · Amsterdam</div><p>First-time renter who needs liability and contents coverage without the complexity of a traditional broker.</p><span class="dark-tag">High student mobility</span></div>
+      <div class="dark-card"><div style="font-size:1.1rem;margin-bottom:1rem">💼</div><h3>Tom, 24</h3><div class="drole">Starter · Rotterdam</div><p>Just started his first job. Needs health and disability coverage that fits an entry-level salary.</p><span class="dark-tag">Growing income, new needs</span></div>
+      <div class="dark-card"><div style="font-size:1.1rem;margin-bottom:1rem">🖥️</div><h3>Emma, 22</h3><div class="drole">Freelancer · Utrecht</div><p>Self-employed and unclear on her coverage obligations. InsurAI maps out exactly what she needs.</p><span class="dark-tag">Underserved ZZP segment</span></div>
+    </div>
+  </div>
+</div>
+
+<div id="why" class="sec alt">
+  <div class="container">
+    <p class="ey">Value proposition</p>
+    <h2 class="st">Why InsurAI.</h2>
+    <div class="rule"></div>
+    <div class="three reveal">
+      <div class="card"><div class="card-icon">⚡</div><h3>Instant advice</h3><p>Personalised guidance in under three minutes, 24/7. No appointments, no waiting, no broker commissions.</p></div>
+      <div class="card"><div class="card-icon">🧠</div><h3>AI-powered precision</h3><p>Trained on real policy data. Matches your exact profile to the most suitable live options on the market.</p></div>
+      <div class="card"><div class="card-icon">💬</div><h3>Plain language</h3><p>Every recommendation comes with a clear explanation. No hidden clauses, no fine print surprises.</p></div>
+      <div class="card"><div class="card-icon">💰</div><h3>Budget-first</h3><p>We factor in your financial situation from the start, ensuring recommended coverage is always affordable.</p></div>
+      <div class="card"><div class="card-icon">🔄</div><h3>Ongoing updates</h3><p>Premium users receive alerts when better options emerge — coverage stays optimal as life changes.</p></div>
+      <div class="card"><div class="card-icon">🤝</div><h3>Transparent fees</h3><p>We earn a small affiliate commission when you proceed with a policy — never added to your premium.</p></div>
+    </div>
+  </div>
+</div>
+
+<div id="competition" class="sec">
+  <div class="container">
+    <p class="ey">Competitive landscape</p>
+    <h2 class="st">Why not just use Independer or Pricewise?</h2>
+    <div class="rule"></div>
+    <p class="sb">Existing comparison platforms are built for the general population. InsurAI is purpose-built for 18–25 year olds — with AI-driven advice, plain language, and a budget-first approach that incumbents simply don't offer.</p>
+    <div class="comp-table-wrap reveal">
+      <table class="comp-table">
+        <thead>
+          <tr><th>Feature</th><th class="us">InsurAI</th><th>Independer</th><th>Pricewise</th><th>Traditional broker</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>AI-powered personalisation</td><td class="us comp-yes">✓ Yes</td><td class="comp-no">✗ No</td><td class="comp-no">✗ No</td><td class="comp-no">✗ No</td></tr>
+          <tr><td>Targeted at 18–25 year olds</td><td class="us comp-yes">✓ Yes</td><td class="comp-no">✗ No</td><td class="comp-no">✗ No</td><td class="comp-no">✗ No</td></tr>
+          <tr><td>Plain language explanations</td><td class="us comp-yes">✓ Yes</td><td class="comp-part">~ Partial</td><td class="comp-part">~ Partial</td><td class="comp-part">~ Depends</td></tr>
+          <tr><td>Budget-first filtering</td><td class="us comp-yes">✓ Yes</td><td class="comp-part">~ Partial</td><td class="comp-part">~ Partial</td><td class="comp-no">✗ No</td></tr>
+          <tr><td>Advice available 24/7</td><td class="us comp-yes">✓ Yes</td><td class="comp-yes">✓ Yes</td><td class="comp-yes">✓ Yes</td><td class="comp-no">✗ No</td></tr>
+          <tr><td>Free basic service</td><td class="us comp-yes">✓ Yes</td><td class="comp-yes">✓ Yes</td><td class="comp-yes">✓ Yes</td><td class="comp-no">✗ No</td></tr>
+          <tr><td>Proactive update alerts</td><td class="us comp-yes">✓ Premium</td><td class="comp-no">✗ No</td><td class="comp-no">✗ No</td><td class="comp-part">~ Sometimes</td></tr>
+          <tr><td>Transparent commission disclosure</td><td class="us comp-yes">✓ Yes</td><td class="comp-part">~ Partial</td><td class="comp-part">~ Partial</td><td class="comp-no">✗ Rarely</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div id="businessmodel" class="sec alt">
+  <div class="container">
+    <p class="ey">Business model</p>
+    <h2 class="st">How InsurAI creates and captures value.</h2>
+    <div class="rule"></div>
+    <p class="sb">InsurAI operates a freemium model combined with affiliate revenue — keeping the core service free for users while generating sustainable revenue from insurers and premium subscribers.</p>
+    <div class="bm-grid reveal">
+      <div class="bm-card"><h3>Customer segments</h3><div class="bm-item">Students (18–22) living independently for the first time, navigating insurance without guidance</div><div class="bm-item">Young professionals (22–25) entering the workforce with new income and coverage needs</div><div class="bm-item">Freelancers / ZZP'ers who lack employer-provided coverage and need clear guidance</div></div>
+      <div class="bm-card"><h3>Revenue streams</h3><div class="bm-item">Affiliate commissions: a transparent fee from insurers per policy taken out via our platform</div><div class="bm-item">Premium subscriptions: €3/month for alerts, extended comparisons, and priority support</div><div class="bm-item">B2B partnerships: white-label advice tools for student housing associations and HR platforms</div></div>
+      <div class="bm-card"><h3>Key channels</h3><div class="bm-item">Organic search and content marketing targeting insurance queries by young people</div><div class="bm-item">University and student association partnerships for direct reach on campus</div><div class="bm-item">Social media campaigns targeting 18–25 demographics across Instagram, TikTok, and LinkedIn</div></div>
+      <div class="bm-card"><h3>Key activities</h3><div class="bm-item">AI model development and continuous training on real, up-to-date policy data</div><div class="bm-item">Insurer partnership management and affiliate agreement negotiation</div><div class="bm-item">Platform maintenance, GDPR compliance, and regulatory monitoring (AFM / Wft)</div></div>
+    </div>
+  </div>
+</div>
+
+<div id="account" class="sec">
+  <div class="container">
+    <p class="ey">Account creation</p>
+    <h2 class="st">How to create your account.</h2>
+    <div class="rule"></div>
+    <p class="sb">Creating an InsurAI account is a guided, four-step process. We only ask for information that is strictly necessary to provide accurate, personalised advice.</p>
+    <div class="onboarding-flow reveal">
+      <div class="ob-step">
+        <div class="ob-num">1</div>
+        <div class="ob-content">
+          <h3>Basic account details</h3>
+          <p>Used for login and communication only. Your password is stored as a secure hash — it is never readable by anyone, including InsurAI staff.</p>
+          <div class="field-list"><span class="field-tag">First &amp; last name</span><span class="field-tag">Email address</span><span class="field-tag">Password (min. 8 characters)</span><span class="field-tag">Date of birth</span></div>
+        </div>
+      </div>
+      <div class="ob-step">
+        <div class="ob-num">2</div>
+        <div class="ob-content">
+          <h3>Your living situation</h3>
+          <p>Helps us determine which insurance types are most relevant — for example, whether you rent or own, and regional differences in policy availability.</p>
+          <div class="field-list"><span class="field-tag">Postcode</span><span class="field-tag">Living situation</span><span class="field-tag">Household size</span><span class="field-tag optional">City (optional)</span></div>
+        </div>
+      </div>
+      <div class="ob-step">
+        <div class="ob-num">3</div>
+        <div class="ob-content">
+          <h3>Financial &amp; employment situation</h3>
+          <p>Ensures our recommendations match your budget and employment type. We use income brackets — your exact income is never stored.</p>
+          <div class="field-list"><span class="field-tag">Employment status</span><span class="field-tag">Monthly income bracket</span><span class="field-tag optional">Current insurer (optional)</span><span class="field-tag optional">Existing policies (optional)</span></div>
+        </div>
+      </div>
+      <div class="ob-step">
+        <div class="ob-num">4</div>
+        <div class="ob-content">
+          <h3>Insurance preferences</h3>
+          <p>Directly feeds into the AI matching process. After this step, you immediately receive your personalised advice — no waiting.</p>
+          <div class="field-list"><span class="field-tag">Insurance types needed</span><span class="field-tag">Priority: price / coverage / flexibility</span><span class="field-tag optional">Specific concerns (optional)</span></div>
+          <div style="margin-top:1rem;padding:0.85rem 1rem;background:var(--accent-light);border-radius:8px;border-left:3px solid var(--accent);font-size:0.8rem;color:var(--text);line-height:1.6"><strong>That's it.</strong> No paper forms, no phone calls, no waiting. Your advice is ready immediately after step 4.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="payment" class="sec alt">
+  <div class="container">
+    <p class="ey">Payment</p>
+    <h2 class="st">How payments work.</h2>
+    <div class="rule"></div>
+    <p class="sb">InsurAI's basic advice service is completely free. Premium subscriptions are handled through secure, industry-standard payment infrastructure.</p>
+    <div class="payment-grid reveal">
+      <div class="pay-card">
+        <h3>Accepted payment methods</h3>
+        <p>For the €3/month Premium subscription, we accept all major payment methods common in the Netherlands:</p>
+        <div class="pay-methods"><span class="pay-badge">🏦 iDEAL</span><span class="pay-badge">💳 Mastercard</span><span class="pay-badge">💳 Visa</span><span class="pay-badge">🅿️ PayPal</span><span class="pay-badge">📱 Apple Pay</span><span class="pay-badge">📱 Google Pay</span></div>
+        <div class="pay-note"><strong>No payment details needed</strong> for the free Basic plan. A payment method is only required when you actively choose to upgrade to Premium.</div>
+      </div>
+      <div class="stripe-box">
+        <h3>Powered by Stripe</h3>
+        <p>All payments are processed through Stripe — one of the world's leading payment providers. InsurAI never stores your card details directly.</p>
+        <div class="stripe-feature">PCI DSS Level 1 certified — the highest payment security standard</div>
+        <div class="stripe-feature">All transactions encrypted with TLS 1.3</div>
+        <div class="stripe-feature">3D Secure authentication for all card payments</div>
+        <div class="stripe-feature">Automatic fraud detection built in</div>
+        <div class="stripe-feature">Cancel your subscription at any time, effective immediately</div>
+      </div>
+    </div>
+    <div style="margin-top:1.4rem;border:1px solid var(--border);border-radius:11px;padding:1.4rem;background:var(--white)">
+      <p style="font-family:var(--serif);font-size:0.95rem;font-weight:600;color:var(--navy);margin-bottom:0.75rem">What happens when you choose a policy through InsurAI?</p>
+      <p style="font-size:0.85rem;color:var(--muted);line-height:1.75">When you decide to purchase a policy via one of our recommended providers, you are redirected to that insurer's own website to complete the purchase. Payment for the insurance premium is made directly to the insurer — not through InsurAI. We receive a transparent affiliate commission from the insurer, which is <strong>never added to your premium cost</strong>. This commission rate is disclosed on every recommendation page.</p>
+    </div>
+  </div>
+</div>
+
+<div id="datainfo" class="sec">
+  <div class="container">
+    <p class="ey">Your data</p>
+    <h2 class="st">What information we collect and why.</h2>
+    <div class="rule"></div>
+    <p class="sb">We believe in full transparency. Below is a complete overview of every data point InsurAI collects, why we need it, and whether it is required or optional.</p>
+    <div class="data-table-wrap reveal">
+      <table class="data-table">
+        <thead><tr><th>Data category</th><th>What we collect</th><th>Why we need it</th><th>Required?</th></tr></thead>
+        <tbody>
+          <tr><td class="dt-cat">Identity</td><td>First name, last name, date of birth</td><td>Account creation and age-appropriate advice</td><td><span class="dt-req req">Required</span></td></tr>
+          <tr><td class="dt-cat">Contact</td><td>Email address</td><td>Login, account recovery, and (with consent) policy alerts</td><td><span class="dt-req req">Required</span></td></tr>
+          <tr><td class="dt-cat">Authentication</td><td>Hashed password</td><td>Securing your account. Passwords are never stored in plain text.</td><td><span class="dt-req req">Required</span></td></tr>
+          <tr><td class="dt-cat">Location</td><td>Postcode, city</td><td>Region-specific policy availability and pricing</td><td><span class="dt-req req">Postcode required</span></td></tr>
+          <tr><td class="dt-cat">Housing</td><td>Living situation, household size</td><td>Determines which insurance types are relevant</td><td><span class="dt-req req">Required</span></td></tr>
+          <tr><td class="dt-cat">Financial</td><td>Monthly income bracket, employment status</td><td>Budget-matching. Brackets only — exact income never stored.</td><td><span class="dt-req req">Required</span></td></tr>
+          <tr><td class="dt-cat">Existing coverage</td><td>Current insurer, active policies</td><td>Avoids recommending coverage you already have; identifies gaps</td><td><span class="dt-req opt">Optional</span></td></tr>
+          <tr><td class="dt-cat">Preferences</td><td>Priority (price / coverage / flexibility), free-text</td><td>Fine-tunes AI recommendations to your personal priorities</td><td><span class="dt-req opt">Optional</span></td></tr>
+          <tr><td class="dt-cat">Payment (Premium only)</td><td>Payment method token via Stripe</td><td>Processing monthly Premium subscription. Raw card data never stored by InsurAI.</td><td><span class="dt-req opt">Premium only</span></td></tr>
+          <tr><td class="dt-cat">Usage data</td><td>Pages visited, features used, time on platform</td><td>Improving the platform. Anonymised and aggregated.</td><td><span class="dt-req opt">Can opt out</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="margin-top:1.1rem;font-size:0.8rem;color:var(--muted);line-height:1.65;padding:1rem;background:var(--off);border-radius:8px;border:1px solid var(--border)"><strong style="color:var(--navy)">Your rights under GDPR:</strong> You have the right to access, correct, export, or delete all personal data InsurAI holds about you at any time. Requests can be submitted via your account settings or by emailing <span style="color:var(--accent)">privacy@insurai.nl</span>. We respond within 30 days.</div>
+  </div>
+</div>
+
+<div id="security" class="sec alt">
+  <div class="container">
+    <p class="ey">Data security &amp; storage</p>
+    <h2 class="st">How we protect and store your data.</h2>
+    <div class="rule"></div>
+    <p class="sb">We apply multiple layers of security and follow privacy-by-design principles — data protection is built into our architecture from the ground up, not added as an afterthought.</p>
+    <div class="sec-grid reveal">
+      <div class="sec-card"><span class="sico">🔒</span><h3>Encryption at rest</h3><p>All personal data is encrypted using AES-256, the same standard used by banks and government institutions.</p></div>
+      <div class="sec-card"><span class="sico">🛡️</span><h3>Encryption in transit</h3><p>All communication between your browser and our servers uses TLS 1.3 — data cannot be intercepted during transfer.</p></div>
+      <div class="sec-card"><span class="sico">👤</span><h3>Hashed passwords</h3><p>Passwords are hashed with bcrypt before storage. Even InsurAI staff cannot read your password — only you know it.</p></div>
+      <div class="sec-card"><span class="sico">📍</span><h3>EU-based servers</h3><p>All data is stored on servers in the European Union (AWS eu-west-1, Amsterdam). Your data never leaves EU jurisdiction.</p></div>
+      <div class="sec-card"><span class="sico">🔑</span><h3>Access control</h3><p>Only authorised InsurAI personnel with a direct operational need can access personal data, under strict role-based policies.</p></div>
+      <div class="sec-card"><span class="sico">🧪</span><h3>Regular security audits</h3><p>Quarterly penetration tests and annual third-party security audits identify and resolve vulnerabilities proactively.</p></div>
+    </div>
+    <div style="margin-top:2.5rem">
+      <p style="font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--navy);margin-bottom:1.1rem">How your data flows through our system</p>
+      <div class="storage-flow reveal">
+        <div class="sf-step"><div class="sf-num">01</div><div class="sf-title">You enter your data</div><div class="sf-body">Submitted via TLS-encrypted HTTPS. Nothing is transmitted in plain text.</div></div>
+        <div class="sf-step"><div class="sf-num">02</div><div class="sf-title">Encrypted &amp; stored</div><div class="sf-body">Immediately encrypted (AES-256) and stored in our EU-based database. Access is logged and monitored.</div></div>
+        <div class="sf-step"><div class="sf-num">03</div><div class="sf-title">AI processing</div><div class="sf-body">The AI model processes anonymised data — no raw personal details leave the secure environment.</div></div>
+        <div class="sf-step"><div class="sf-num">04</div><div class="sf-title">Results &amp; retention</div><div class="sf-body">Advice shown in your account. Data retained for account lifetime + 30 days, then permanently deleted.</div></div>
+      </div>
+      <div class="retention-note"><strong>Data retention policy:</strong> We retain your personal data for the duration of your account plus a maximum of 30 days after closure. Usage analytics are anonymised after 12 months. You can request full deletion at any time via your account settings.</div>
+    </div>
+  </div>
+</div>
+
+<div id="pricing" class="sec">
+  <div class="container">
+    <p class="ey">Pricing</p>
+    <h2 class="st">Simple and transparent.</h2>
+    <div class="rule"></div>
+    <p class="sb">Start at no cost. Upgrade for additional features when you need them.</p>
+    <div class="pricing-wrap reveal">
+      <div class="pc">
+        <div class="pc-tier">Basic</div>
+        <div class="pc-price">Free</div>
+        <div class="pc-per">No credit card required</div>
+        <div class="pc-div"></div>
+        <ul class="pc-feats">
+          <li><span class="chk">✓</span>Personalised AI advice</li>
+          <li><span class="chk">✓</span>Compare up to 10 policies</li>
+          <li><span class="chk">✓</span>Plain-language explanations</li>
+          <li class="off"><span class="chk off">–</span>Policy update alerts</li>
+          <li class="off"><span class="chk off">–</span>Priority support</li>
+        </ul>
+        <button class="pc-cta" onclick="openModal()">Get started free</button>
+      </div>
+      <div class="pc feat">
+        <div class="pc-badge">Most popular</div>
+        <div class="pc-tier">Premium</div>
+        <div class="pc-price">€3<span style="font-size:1rem;font-weight:400;opacity:0.45">/mo</span></div>
+        <div class="pc-per">Everything you need</div>
+        <div class="pc-div"></div>
+        <ul class="pc-feats">
+          <li><span class="chk">✓</span>Everything in Basic</li>
+          <li><span class="chk">✓</span>Compare all available policies</li>
+          <li><span class="chk">✓</span>Personalised update alerts</li>
+          <li><span class="chk">✓</span>Better deals &amp; exclusive rates</li>
+          <li><span class="chk">✓</span>Priority support</li>
+        </ul>
+        <button class="pc-cta" onclick="openModal()">Start Premium</button>
+      </div>
+    </div>
+    <p style="margin-top:1.25rem;font-size:0.78rem;color:var(--muted)">We also receive a transparent affiliate commission when you proceed with a policy — this is never reflected in your premium.</p>
+  </div>
+</div>
+
+<div id="financials" class="sec alt">
+  <div class="container">
+    <p class="ey">Financial pitch</p>
+    <h2 class="st">Year 1 business case.</h2>
+    <div class="rule"></div>
+    <p class="sb">A realistic overview of our cost structure, revenue model, and investment requirements for the first twelve months of operation.</p>
+    <div class="fin-grid reveal" style="margin-top:2rem">
+      <div class="fin-card"><div class="fc-label">Seed investment needed</div><div class="fc-val">€120,000</div><div class="fc-sub">One-time raise, Year 1</div></div>
+      <div class="fin-card"><div class="fc-label">Year 1 revenue target</div><div class="fc-val">€38,400</div><div class="fc-sub">Affiliate + subscriptions</div></div>
+      <div class="fin-card"><div class="fc-label">Total operating costs</div><div class="fc-val">€109,200</div><div class="fc-sub">Full year estimate</div></div>
+      <div class="fin-card"><div class="fc-label">Break-even (projection)</div><div class="fc-val">Year 2</div><div class="fc-sub">At 5,000+ active users</div></div>
+    </div>
+    <div class="two reveal" style="align-items:start;gap:3rem">
+      <div>
+        <p style="font-family:var(--serif);font-size:0.95rem;font-weight:600;color:var(--navy);margin-bottom:0.85rem">Operating cost breakdown (Year 1)</p>
+        <table class="fin-table">
+          <thead><tr><th>Cost item</th><th>Monthly</th><th>Annual</th></tr></thead>
+          <tbody>
+            <tr><td>Tech infrastructure (cloud, API)</td><td>€1,200</td><td>€14,400</td></tr>
+            <tr><td>AI model licensing &amp; compute</td><td>€800</td><td>€9,600</td></tr>
+            <tr><td>Salaries (2 FTE founders)</td><td>€5,000</td><td>€60,000</td></tr>
+            <tr><td>Marketing &amp; user acquisition</td><td>€1,500</td><td>€18,000</td></tr>
+            <tr><td>Legal &amp; compliance</td><td>€400</td><td>€4,800</td></tr>
+            <tr><td>Office &amp; miscellaneous</td><td>€200</td><td>€2,400</td></tr>
+            <tr class="total"><td><strong>Total</strong></td><td><strong>€9,100</strong></td><td><strong>€109,200</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <p style="font-family:var(--serif);font-size:0.95rem;font-weight:600;color:var(--navy);margin-bottom:0.85rem">Revenue model (Year 1 projection)</p>
+        <table class="fin-table">
+          <thead><tr><th>Revenue stream</th><th>Assumption</th><th>Annual</th></tr></thead>
+          <tbody>
+            <tr><td>Affiliate commissions</td><td>200 conversions × €120</td><td>€24,000</td></tr>
+            <tr><td>Premium subscriptions</td><td>200 users × €36/yr</td><td>€7,200</td></tr>
+            <tr><td>B2B partnerships (pilot)</td><td>2 partners × €3,600</td><td>€7,200</td></tr>
+            <tr class="total"><td><strong>Total</strong></td><td></td><td><strong>€38,400</strong></td></tr>
+          </tbody>
+        </table>
+        <div class="fin-note">The €120,000 seed investment covers an estimated 13-month runway at current burn rate, providing sufficient time to reach break-even user volumes before requiring a Series A.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="duediligence" class="sec">
+  <div class="container">
+    <p class="ey">Due diligence</p>
+    <h2 class="st">Sustainability &amp; ethical risk assessment.</h2>
+    <div class="rule"></div>
+    <p class="sb">A thorough assessment of the key risks investors should be aware of — and the concrete steps InsurAI takes to mitigate each one.</p>
+    <div class="risk-grid reveal">
+      <div class="risk-card warn"><span class="risk-tag">Risk</span><h4>AI bias in recommendations</h4><p>If training data reflects historical biases, the model may systematically under-recommend coverage to certain groups.</p><p style="margin-top:0.6rem;font-weight:500;font-size:0.82rem;color:#3a2010">Mitigation: Regular bias audits, diverse training datasets, human review of edge cases, opt-out rights for all users.</p></div>
+      <div class="risk-card warn"><span class="risk-tag">Risk</span><h4>Data privacy &amp; GDPR compliance</h4><p>Processing sensitive personal and financial data creates regulatory exposure. Non-compliance could result in significant fines.</p><p style="margin-top:0.6rem;font-weight:500;font-size:0.82rem;color:#3a2010">Mitigation: Privacy-by-design architecture, data minimisation, end-to-end encryption, DPA registration, external GDPR audit.</p></div>
+      <div class="risk-card warn"><span class="risk-tag">Risk</span><h4>Regulatory compliance (Wft / AFM)</h4><p>Providing insurance advice in the Netherlands may fall under the Wet financieel toezicht (Wft), requiring an AFM licence.</p><p style="margin-top:0.6rem;font-weight:500;font-size:0.82rem;color:#3a2010">Mitigation: MVP positioned as "information tool." AFM licensing pathway planned for Year 1.</p></div>
+      <div class="risk-card ok"><span class="risk-tag">Strength</span><h4>Low environmental footprint</h4><p>Fully digital, paperless platform. Cloud infrastructure hosted on green-energy-certified providers (AWS eu-west-1).</p><p style="margin-top:0.6rem;font-weight:500;font-size:0.82rem;color:#04342C">Commitment: Annual carbon footprint reporting from Year 2 onwards.</p></div>
+      <div class="risk-card ok"><span class="risk-tag">Strength</span><h4>Positive social impact</h4><p>Directly addresses financial exclusion by making insurance accessible to a demographic historically ignored by traditional insurers.</p><p style="margin-top:0.6rem;font-weight:500;font-size:0.82rem;color:#04342C">Alignment with UN SDG 1, SDG 10, and SDG 16.</p></div>
+      <div class="risk-card ok"><span class="risk-tag">Strength</span><h4>Transparent business model</h4><p>Affiliate commissions are disclosed upfront. No hidden fees. Users can proceed without purchasing through our platform.</p><p style="margin-top:0.6rem;font-weight:500;font-size:0.82rem;color:#04342C">Annual transparency report on commission rates published publicly.</p></div>
+    </div>
+  </div>
+</div>
+
+<div id="trust" class="sec alt">
+  <div class="container">
+    <p class="ey">Security &amp; compliance</p>
+    <h2 class="st">Your privacy is our responsibility.</h2>
+    <div class="rule"></div>
+    <div class="trust-grid reveal">
+      <div class="tcard"><span class="ti">🔐</span><h3>GDPR compliant</h3><p>We fully comply with European data protection law. You retain full control over your personal data at all times, including the right to deletion.</p></div>
+      <div class="tcard"><span class="ti">🔒</span><h3>End-to-end encryption</h3><p>All personal information is encrypted in transit and at rest. We never sell or share your data with third parties for commercial purposes.</p></div>
+      <div class="tcard"><span class="ti">👁️</span><h3>Transparent recommendations</h3><p>Every recommendation includes a clear explanation of why it was made. No black-box decisions — you always understand the reasoning.</p></div>
+    </div>
+  </div>
+</div>
+
+<div id="team" class="sec">
+  <div class="container">
+    <p class="ey">The team</p>
+    <h2 class="st">The people behind InsurAI.</h2>
+    <div class="rule"></div>
+    <p class="sb">A multidisciplinary founding team combining finance, technology, marketing, and legal expertise — purpose-built to execute on this opportunity.</p>
+    <div class="team-grid reveal">
+      <div class="tm"><div class="tm-avatar">HS</div><h4>Hans Singelenberg</h4><div class="tm-role">Chief Executive Officer</div><p>Responsible for overall strategy, investor relations, and company direction.</p></div>
+      <div class="tm"><div class="tm-avatar">JD</div><h4>Julian Doppenberg</h4><div class="tm-role">Product Manager</div><p>Leads product development and user experience. Ensures the platform delivers on simplicity and accuracy.</p></div>
+      <div class="tm"><div class="tm-avatar">VV</div><h4>Veerle Vos</h4><div class="tm-role">Business Development</div><p>Manages insurer partnerships, affiliate agreements, and market expansion strategy.</p></div>
+      <div class="tm"><div class="tm-avatar">EP</div><h4>Ems Pennink</h4><div class="tm-role">Finance Manager</div><p>Oversees financial planning, investor reporting, and cost management.</p></div>
+      <div class="tm"><div class="tm-avatar">WT</div><h4>Wouter van Tilburg</h4><div class="tm-role">Marketing Manager</div><p>Drives user acquisition through digital channels and student network partnerships.</p></div>
+      <div class="tm"><div class="tm-avatar">FB</div><h4>Filipine Boogaerdt 't Hooft</h4><div class="tm-role">Legal Manager</div><p>Manages GDPR compliance, AFM licensing pathway, and partner contract negotiations.</p></div>
+    </div>
+  </div>
+</div>
+
+<div id="faq" class="sec alt">
+  <div class="container">
+    <p class="ey">FAQ</p>
+    <h2 class="st">Frequently asked questions.</h2>
+    <div class="rule"></div>
+    <p class="sb">Questions from users and investors, answered clearly.</p>
+    <div class="faq-list reveal">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Is InsurAI a licensed insurance adviser?<span class="faq-arrow">▾</span></button>
+        <div class="faq-a">InsurAI currently operates as an information and comparison platform, not a formally licensed insurance adviser under the Wet financieel toezicht (Wft). Our recommendations are informational — you make the final decision independently. We are actively pursuing an AFM intermediary licence as part of our Year 1 roadmap.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">How does InsurAI make money if the basic service is free?<span class="faq-arrow">▾</span></button>
+        <div class="faq-a">We earn a transparent affiliate commission from insurance providers when a user proceeds to take out a policy via our platform. This commission is paid by the insurer — it is never added to your premium cost. We also offer a Premium subscription at €3/month for additional features. Both revenue streams are disclosed upfront.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Can I delete my account and all my data?<span class="faq-arrow">▾</span></button>
+        <div class="faq-a">Yes. You can delete your account at any time from your account settings. All personal data is permanently removed from our systems within 30 days of account closure, in accordance with GDPR Article 17 (right to erasure). You can also submit a deletion request directly to privacy@insurai.nl.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Is my financial information safe?<span class="faq-arrow">▾</span></button>
+        <div class="faq-a">Yes. We only collect income brackets — not your exact income. All data is encrypted at rest (AES-256) and in transit (TLS 1.3). Payment details for Premium subscriptions are handled entirely by Stripe and are never stored on InsurAI's servers. Our infrastructure is hosted in the EU and subject to quarterly security audits.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Does InsurAI work for all types of insurance?<span class="faq-arrow">▾</span></button>
+        <div class="faq-a">At launch, InsurAI focuses on: liability insurance (AVP), contents insurance (inboedelverzekering), health insurance (zorgverzekering), and basic disability coverage. We plan to expand to travel, legal expenses, and life insurance in Year 2.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">What if the AI recommendation is wrong for my situation?<span class="faq-arrow">▾</span></button>
+        <div class="faq-a">InsurAI's recommendations always include a clear explanation of why a policy was suggested. You are never obligated to follow our advice — the final decision is always yours. Premium users can contact our support team for a human review of their profile. We continuously improve our model based on user feedback.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="contact" class="sec">
+  <div class="container">
+    <p class="ey">Investor relations</p>
+    <h2 class="st">Interested in investing?</h2>
+    <div class="rule"></div>
+    <p class="sb">We are currently raising our seed round of €120,000. If you are interested in learning more, we would welcome a conversation.</p>
+    <div class="investor-box reveal">
+      <div>
+        <h3>Let's build the future of insurance together.</h3>
+        <p>InsurAI is seeking seed investment to fund our first year of operations, grow our user base, and pursue our AFM licensing pathway. We offer a transparent cap table, monthly investor updates, and an open-door policy for due diligence inquiries.</p>
+      </div>
+      <div class="investor-details">
+        <div class="investor-detail"><div class="id-icon">📧</div><div><div class="id-label">Investor inquiries</div><div class="id-value">invest@insurai.nl</div></div></div>
+        <div class="investor-detail"><div class="id-icon">👤</div><div><div class="id-label">Primary contact</div><div class="id-value">Hans Singelenberg, CEO</div></div></div>
+        <div class="investor-detail"><div class="id-icon">📍</div><div><div class="id-label">Location</div><div class="id-value">Amsterdam, The Netherlands</div></div></div>
+        <div class="investor-detail"><div class="id-icon">💼</div><div><div class="id-label">Stage</div><div class="id-value">Pre-seed / Seed — raising €120,000</div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section id="cta-sec">
+  <div class="container">
+    <p class="cta-ey">Get started today</p>
+    <h2 class="cta-t">Ready to find insurance<br>that fits your life?</h2>
+    <p class="cta-sub">Free to use. Personalised in minutes. No jargon, no pressure.</p>
+    <button class="btn-white" onclick="openModal()">Get started for free →</button>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner container">
+    <div>
+      <div class="fl">Insur<span>AI</span></div>
+      <div class="footer-desc">AI-powered insurance advice for students and young professionals across the Netherlands.</div>
+    </div>
+    <div class="flink-group">
+      <div class="flink-group-title">Product</div>
+      <div class="flinks">
+        <a href="#mission">Mission &amp; vision</a>
+        <a href="#how">How it works</a>
+        <a href="#account">Create account</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+      </div>
+    </div>
+    <div class="flink-group">
+      <div class="flink-group-title">For investors</div>
+      <div class="flinks">
+        <a href="#transformation">Digital transformation</a>
+        <a href="#competition">Competition</a>
+        <a href="#businessmodel">Business model</a>
+        <a href="#financials">Financials</a>
+        <a href="#duediligence">Due diligence</a>
+        <a href="#contact">Investor contact</a>
+      </div>
+    </div>
+    <div class="flink-group">
+      <div class="flink-group-title">Trust &amp; security</div>
+      <div class="flinks">
+        <a href="#datainfo">Your data</a>
+        <a href="#security">Data security</a>
+        <a href="#payment">Payment</a>
+        <a href="#trust">Privacy</a>
+        <a href="#team">Team</a>
+      </div>
+    </div>
+  </div>
+  <div class="container"><div class="footer-bottom">© 2025 InsurAI B.V. — KvK registration pending · privacy@insurai.nl · invest@insurai.nl</div></div>
+</footer>
+
+<div class="mwrap" id="modal" onclick="handleOverlay(event)">
+  <div class="modal">
+    <button class="mcl" onclick="closeModal()">✕</button>
+    <h2>Create your account</h2>
+    <p class="modal-sub">We only ask for what we need. Your data is encrypted and never sold.</p>
+    <div class="modal-step-indicator">
+      <div class="msi active" id="msi1"></div><div class="msi" id="msi2"></div><div class="msi" id="msi3"></div><div class="msi" id="msi4"></div>
+    </div>
+    <div class="modal-step active" id="ms1">
+      <div class="ms-title">Step 1 of 4 — Account details</div>
+      <div class="modal-row">
+        <div class="fg"><label>First name</label><input type="text" placeholder="Lisa"></div>
+        <div class="fg"><label>Last name</label><input type="text" placeholder="van den Berg"></div>
+      </div>
+      <div class="fg"><label>Email address</label><input type="email" placeholder="lisa@example.com"><div class="hint">Used for login and (with consent) policy alerts</div></div>
+      <div class="fg"><label>Date of birth</label><input type="date"></div>
+      <div class="fg"><label>Password</label><input type="password" placeholder="Minimum 8 characters"><div class="hint">Stored as a secure hash — we never see your password</div></div>
+      <div class="modal-actions"><button class="mbtn" onclick="nextStep(2)">Continue →</button></div>
+    </div>
+    <div class="modal-step" id="ms2">
+      <div class="ms-title">Step 2 of 4 — Living situation</div>
+      <div class="fg"><label>Postcode</label><input type="text" placeholder="1012 AB"><div class="hint">Used for region-specific policy availability</div></div>
+      <div class="fg"><label>Living situation</label><select><option value="">Select...</option><option>Private rental</option><option>Student housing / campus</option><option>Owner-occupied</option><option>Living with parents</option><option>Other</option></select></div>
+      <div class="fg"><label>Number of people in household</label><select><option value="">Select...</option><option>1 (just me)</option><option>2</option><option>3 or more</option></select></div>
+      <div class="modal-actions"><button class="mbtn back" onclick="nextStep(1)">← Back</button><button class="mbtn" onclick="nextStep(3)">Continue →</button></div>
+    </div>
+    <div class="modal-step" id="ms3">
+      <div class="ms-title">Step 3 of 4 — Financial situation</div>
+      <div class="fg"><label>Employment status</label><select><option value="">Select...</option><option>Student (full-time)</option><option>Employed (part-time)</option><option>Employed (full-time)</option><option>Freelancer / ZZP'er</option><option>Unemployed / other</option></select></div>
+      <div class="fg"><label>Monthly net income (bracket)</label><select><option value="">Select...</option><option>Under €500</option><option>€500 – €1,000</option><option>€1,000 – €1,500</option><option>€1,500 – €2,500</option><option>Over €2,500</option></select><div class="hint">We use brackets only — your exact income is never stored</div></div>
+      <div class="fg"><label>Current insurer (optional)</label><input type="text" placeholder="e.g. Centraal Beheer, Interpolis…"></div>
+      <div class="modal-actions"><button class="mbtn back" onclick="nextStep(2)">← Back</button><button class="mbtn" onclick="nextStep(4)">Continue →</button></div>
+    </div>
+    <div class="modal-step" id="ms4">
+      <div class="ms-title">Step 4 of 4 — Insurance preferences</div>
+      <div class="fg"><label>What do you need coverage for?</label><select><option value="">Select...</option><option>I'm not sure — help me decide</option><option>Health insurance (zorgverzekering)</option><option>Liability insurance (AVP)</option><option>Contents insurance (inboedel)</option><option>Multiple types</option></select></div>
+      <div class="fg"><label>What matters most to you?</label><select><option value="">Select...</option><option>Lowest possible price</option><option>Best coverage</option><option>Flexibility (easy to cancel)</option><option>Balance of price and coverage</option></select></div>
+      <div class="fg"><label>Anything specific we should know? (optional)</label><input type="text" placeholder="e.g. I own a bicycle worth €800…"></div>
+      <div class="checkbox-row"><input type="checkbox" id="consent" checked><label for="consent">I agree to InsurAI's privacy policy and consent to my data being used to generate personalised insurance advice.</label></div>
+      <div class="modal-actions"><button class="mbtn back" onclick="nextStep(3)">← Back</button><button class="mbtn" onclick="handleSubmit()">Find my insurance →</button></div>
+      <p class="privacy-note">Encrypted · EU servers · Never sold to third parties</p>
+    </div>
+  </div>
+</div>
+
+<script>
+const reveals=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*70);obs.unobserve(e.target)}});
+},{threshold:0.07});
+reveals.forEach(el=>obs.observe(el));
+
+function openModal(){document.getElementById('modal').classList.add('open');goToStep(1)}
+function closeModal(){document.getElementById('modal').classList.remove('open')}
+function handleOverlay(e){if(e.target===document.getElementById('modal'))closeModal()}
+function nextStep(n){goToStep(n)}
+function goToStep(n){
+  for(let i=1;i<=4;i++){
+    document.getElementById('ms'+i).classList.toggle('active',i===n);
+    document.getElementById('msi'+i).classList.toggle('active',i<=n);
+  }
+  document.querySelector('.modal').scrollTop=0;
+}
+function handleSubmit(){
+  const b=document.querySelector('#ms4 .mbtn:last-child');
+  b.textContent='Analysing your profile…';b.style.opacity='0.7';
+  setTimeout(()=>{b.textContent='🎉 Advice ready! (demo)';b.style.opacity='1';setTimeout(closeModal,1500)},2000);
+}
+function toggleFaq(btn){
+  const item=btn.parentElement;
+  const isOpen=item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+  if(!isOpen)item.classList.add('open');
+}
+</script>
+</body>
+</html>
